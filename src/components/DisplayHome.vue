@@ -11,14 +11,36 @@
         <th>Notes</th>
         <th>Actions</th>
       </tr>
-      <tr v-for="employee in employees" :key="employee.id">
-          <td><img :src=' `../assets/${employee.profilePic}` ' /> ></td>
-          <td>{{employee.name}}</td>
-          <td>{{employee.gender}}</td>
-          <td>{{employee.departments}}</td>
-          <td>{{employee.salary}}</td>
-          <td>{{employee.startDate}}</td>
-           <td>{{employee.note}}</td>
+      <tr v-for="employees in employee" :key="employee.id">
+          <td><img :src=' `../assets/${employees.profilePic}` ' /> ></td>
+          <td>{{employees.name}}</td>
+          <td>{{employees.gender}}</td>
+          <td>{{employees.department}}</td>
+          <td>{{employees.salary}}</td>
+          <td>{{employees.startDate}}</td>
+           <td>{{employees.note}}</td>
+           <td>
+             <v-bottom-navigation
+      v-model="value"
+      :input-value="active"
+      color="indigo"
+       />
+      <v-btn>
+        <span>Recents</span>
+
+        <v-icon>mdi-history</v-icon>
+      </v-btn>
+            <img
+            @click="remove(employees.employeeId)"
+            src="../assets/filled-trash.png"
+            alt="delete"/>
+
+             <img
+            @click="update(employees.employeeId)"
+            src="../assets/edit.png"
+            alt="edit"/>
+
+           </td>
       </tr>
 
     </tbody>

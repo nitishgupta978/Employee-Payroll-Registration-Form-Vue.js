@@ -3,10 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../css/index.css" media="(min-width: 12em)"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100; 0,200;0,300;0,400;0,600;1,500&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600 &display=swap">
-     -->
+    
     <title>Employee payroll form </title>
 </head>
 <body>
@@ -20,7 +17,7 @@
         </div>
     </header>
      <div class="form-content">
-        <form class="form" action="#"  onsubmit="save(event);return false">
+        <form class="form" action="#"  @submit=" submitForm">
             
         <div class="form-head"> Employee payroll form  </div>
         
@@ -34,28 +31,27 @@
         <label  class="lable text" for="profile">Profile Image</label>
         <div class="profile-radio-content">
             <label >
-                <input type="radio" name="profile" id="profile1" value="../assert/Image2.jpg" v-model="formValues.profilePic" required>
-                <img class="profile" id="image1" src="../assets/Ellipse -01.png" alt="image2" style="height: 50px" />
+                <input type="radio" name="profile" id="profile1" value="../assets/Ellipse -01.png" v-model="formValues.profilePic" required>
+                <img class="profile" id="image1" src="../assets/Ellipse -01.png" alt="image1" style="height: 50px" />
             </label>
 
             <label >
-                <input type="radio" name="profile" id="profile2" value="../assert/Image3.jpg" v-model="formValues.profilePic" required/>
-                <img class="profile" id="image2" src="../assets/Ellipse -02.png" alt="image3" style="height: 50px"/>
+                <input type="radio" name="profile" id="profile2" value="../assets/Ellipse -02.png" v-model="formValues.profilePic" required/>
+                <img class="profile" id="image2" src="../assets/Ellipse -02.png" alt="image2" style="height: 50px"/>
             </label>
 
             <label >
-                <input type="radio" name="profile" id="profile3" value="../assert/Image4.jpg" v-model="formValues.profilePic" required>
-                <img class="profile" id="image3" src="../assets/Ellipse -03.png" alt="image4" style="height: 50px">
+                <input type="radio" name="profile" id="profile3" value="../assets/Ellipse -03.png" v-model="formValues.profilePic" required>
+                <img class="profile" id="image3" src="../assets/Ellipse -03.png" alt="image3" style="height: 50px">
             </label>
 
             <label >
-                <input type="radio" name="profile" id="profile4" value="css"  v-model="formValues.profilePic" required/>
-                <img class="profile" id="image4" src="../assets/Ellipse -04.png" alt="image2" style="height: 50px"/>
+                <input type="radio" name="profile" id="profile4" value="../assets/Ellipse -04.png"  v-model="formValues.profilePic" required/>
+                <img class="profile" id="image4" src="../assets/Ellipse -04.png" alt="image4" style="height: 50px"/>
             </label>
 
         </div>
     </div>
-       
  
     <div class=" row-content">
         <label  class="label text" for="gender">Gender</label>
@@ -72,17 +68,14 @@
     </div>
 
     <div class="row-content">
-        <label class="label text" for="department">Department</label>
-       
+        <label class="label text" for="department" >Department</label>
         <div>
             
-            
-            <input type="checkbox" name="hr" id="hr"  v-model="formValues.departments">HR
-
-            <input type="checkbox" name="sales" id="sales"  v-model="formValues.departments">Sales
-            <input type="checkbox" name="Finance" id="Finance"  v-model="formValues.departments">Finance
-            <input type="checkbox" name="engineer" id="engineer"  v-model="formValues.departments">Engineer
-            <input type="checkbox" name="other" id="other"  v-model="formValues.departments">Other
+            <input type="checkbox" value="hr" id="hr"  v-model="formValues.department">HR
+            <input type="checkbox" value="sales" id="sales"  v-model="formValues.department">Sales
+            <input type="checkbox" value="Finance" id="Finance"  v-model="formValues.department">Finance
+            <input type="checkbox" value="engineer" id="engineer"  v-model="formValues.department">Engineer
+            <input type="checkbox" value="other" id="other"  v-model="formValues.department">Other
               <!-- <p style="color:rgb(188, 122, 122);">***Department can be select Multipule </p> -->
            
 
@@ -193,7 +186,7 @@ export default {
         name: "",
         profilePic: "",
         gender: "",
-        departments: [],
+        department: [],
         salary: "",
         day: "",
         month: "",
@@ -221,22 +214,22 @@ export default {
             alert("WARNING !! Error while adding the Employee!")
         })
     },
-     setData(obj) {
-      console.log(obj);
-      let array = obj.startDate;
-      console.log(array);
-      this.formValues.id = obj.id;
-      this.formValues.name = obj.name;
-      this.formValues.departments = obj.departments;
-      this.formValues.day = array[0] + array[1];
-      this.formValues.month = array[2] + array[3] + array[4];
-      this.formValues.year = array[5] + array[6] + array[7] + array[8];
-      this.formValues.note = obj.note;
-      this.formValues.gender = obj.gender;
-      this.formValues.salary = obj.salary;
-      this.formValues.profilePic = obj.profilePic;
-      console.log(this.formValues);
-    },
+    //  setData(obj) {
+    //   console.log(obj);
+    //   let array = obj.startDate;
+    //   console.log(array);
+    //   this.formValues.id = obj.id;
+    //   this.formValues.name = obj.name;
+    //   this.formValues.departments = obj.departments;
+    //   this.formValues.day = array[0] + array[1];
+    //   this.formValues.month = array[2] + array[3] + array[4];
+    //   this.formValues.year = array[5] + array[6] + array[7] + array[8];
+    //   this.formValues.note = obj.note;
+    //   this.formValues.gender = obj.gender;
+    //   this.formValues.salary = obj.salary;
+    //   this.formValues.profilePic = obj.profilePic;
+    //   console.log(this.formValues);
+    // },
   },
   }
 

@@ -8,7 +8,7 @@ class EmployeeService{
             // return axios.get('${EMPLOYEE_BASED_API}/get')
     }
     addEmployees(data){
-        return axios.post(`${EMPLOYEE_BASED_API_URL}/create`)
+        return axios.post(`${EMPLOYEE_BASED_API_URL}/create`,data)
     }
     deleteEmployee(employeeId){
         return axios.delete(`${EMPLOYEE_BASED_API_URL}/delete/$(employeeId)`)
