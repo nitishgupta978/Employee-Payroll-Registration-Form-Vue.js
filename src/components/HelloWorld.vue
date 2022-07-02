@@ -3,12 +3,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/index.css" media="(min-width: 12em)"/>
+    <!-- <link rel="stylesheet" href="../css/index.css" media="(min-width: 12em)"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100; 0,200;0,300;0,400;0,600;1,500&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600 &display=swap">
-    
+     -->
     <title>Employee payroll form </title>
-  
 </head>
 <body>
     <header class="header-content headre ">
@@ -20,11 +19,11 @@
             </div>
         </div>
     </header>
-     
      <div class="form-content">
         <form class="form" action="#"  onsubmit="save(event);return false">
             
         <div class="form-head"> Employee payroll form  </div>
+        
         <div class="row-content">
            
             <label class="lable text" for="name">Name</label>
@@ -36,22 +35,22 @@
         <div class="profile-radio-content">
             <label >
                 <input type="radio" name="profile" id="profile1" value="../assert/Image2.jpg" v-model="formValues.profilePic" required>
-                <img class="profile" id="image1" src="../assets/Image2.jpg" alt="image2" style="height: 50px" />
+                <img class="profile" id="image1" src="../assets/Ellipse -01.png" alt="image2" style="height: 50px" />
             </label>
 
             <label >
                 <input type="radio" name="profile" id="profile2" value="../assert/Image3.jpg" v-model="formValues.profilePic" required/>
-                <img class="profile" id="image2" src="../assets/Image3.jpg" alt="image3" style="height: 50px"/>
+                <img class="profile" id="image2" src="../assets/Ellipse -02.png" alt="image3" style="height: 50px"/>
             </label>
 
             <label >
                 <input type="radio" name="profile" id="profile3" value="../assert/Image4.jpg" v-model="formValues.profilePic" required>
-                <img class="profile" id="image3" src="../assets/Image4.jpg" alt="image4" style="height: 50px">
+                <img class="profile" id="image3" src="../assets/Ellipse -03.png" alt="image4" style="height: 50px">
             </label>
 
             <label >
                 <input type="radio" name="profile" id="profile4" value="css"  v-model="formValues.profilePic" required/>
-                <img class="profile" id="image4" src="../assets/Image5.jpg" alt="image2" style="height: 50px"/>
+                <img class="profile" id="image4" src="../assets/Ellipse -04.png" alt="image2" style="height: 50px"/>
             </label>
 
         </div>
@@ -78,11 +77,12 @@
         <div>
             
             
-            <input type="checkbox" name="hr" id="hr"  v-model="formValues.department">HR
-            <input type="checkbox" name="sales" id="sales"  v-model="formValues.department">Sales
-            <input type="checkbox" name="Finance" id="Finance"  v-model="formValues.department">Finance
-            <input type="checkbox" name="engineer" id="engineer"  v-model="formValues.department">Engineer
-            <input type="checkbox" name="other" id="other"  v-model="formValues.department">Other
+            <input type="checkbox" name="hr" id="hr"  v-model="formValues.departments">HR
+
+            <input type="checkbox" name="sales" id="sales"  v-model="formValues.departments">Sales
+            <input type="checkbox" name="Finance" id="Finance"  v-model="formValues.departments">Finance
+            <input type="checkbox" name="engineer" id="engineer"  v-model="formValues.departments">Engineer
+            <input type="checkbox" name="other" id="other"  v-model="formValues.departments">Other
               <!-- <p style="color:rgb(188, 122, 122);">***Department can be select Multipule </p> -->
            
 
@@ -166,7 +166,7 @@
         <textarea name="Notes" id="notes"  class="input" placeholder="text here.." style="height: 100px;" cols="30" rows="10" v-model="formValues.note"></textarea>
     </div>
     <div class="buttonParent">
-        <a href="./index.html" class="resetButton button cancelButton">Cancel</a>
+       <router-link to="/"> <button  class="resetButton button cancelButton">Cancel</button></router-link>
 
         <div class="Submit-reset">
             <button type="submit" class="button submitButton " id="submitButton"> Submit</button>
@@ -180,6 +180,9 @@
 </template>
 
 <script>
+
+import EmployeeService from '../Service/EmployeeService';
+
 export default {
   name: 'HelloWorld',
   
@@ -199,203 +202,272 @@ export default {
         startDate: "",
       },
     }
+  },
+  methods :{
+    submitForm(event){
+        event.preventDefault();
+        this.formValues.startDate=this.formValues.day + this.formValues.month + this.formValues.year;
+        console.log(this.formValues)
+        const data=this.formValues;
+
+        EmployeeService.addEmployees(data).then ((response) => {
+            console.log(response);
+            console.log(response.data.data);
+            this.employees=response.data.data;
+            alert(" Employee Added Successfully!!",response)
+        })
+        .catch(error =>{
+            console.log(error);
+            alert("WARNING !! Error while adding the Employee!")
+        })
+    },
+     setData(obj) {
+      console.log(obj);
+      let array = obj.startDate;
+      console.log(array);
+      this.formValues.id = obj.id;
+      this.formValues.name = obj.name;
+      this.formValues.departments = obj.departments;
+      this.formValues.day = array[0] + array[1];
+      this.formValues.month = array[2] + array[3] + array[4];
+      this.formValues.year = array[5] + array[6] + array[7] + array[8];
+      this.formValues.note = obj.note;
+      this.formValues.gender = obj.gender;
+      this.formValues.salary = obj.salary;
+      this.formValues.profilePic = obj.profilePic;
+      console.log(this.formValues);
+    },
+  },
   }
-}
+
 </script>
 
 <style>
 
-html body {
-  margin: 0 ;
-  height: 100%;
+body {
+    margin: 0;
+    height: 100%;
 }
+
 .header {
-  padding: 15px 0;
-  background-color: aliceblue;
+     padding: 15px 0px;
+    background-color: #ffffff;
 }
+
 .header-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border: 0px solid green;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 0px solid green;
 }
+
 .logo-content {
-  display: flex;
-  flex-direction: row;
-  align-items: c;
-  border: 1px silver;
-  width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 0px solid green;
+    width: 80%;
 }
 
 .logo-content-img {
-   border: solid 0px #0e65b6;
-
+    border: 0px solid #42515f;
 }
-/* using by color change Employee payroll text right side of logo */
+
 .emp-text {
-  font: normal normal bold 20px/25px montserrat;
-  font-family: "montserrat",seens-serif;
-  color: rgb(60, 121, 101);
-  text-transform:capitalize ;
+    font: normal normal bold 20px/25px Montserrat;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0px;
+    color: #82A70C;
+    padding-left: 10px;
+    text-transform: capitalize;
 }
-/* color change only payroll text */
-.emp-payroll{
-  color: #0e457a;
+
+.emp-payroll {
+    color: #42515f;
 }
-*{box-sizing: border-box;}
 
+*{
+    box-sizing: border-box;
+}
 
+/*UC2*/
 .form-content {
-  min-height: calc(100% - 80px);
-  background-color: #f0ebeb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+    min-height: calc(100% - 80px);
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px solid green;
 }
+
 .form {
-  width: 65%;
-  padding: 44px 60px ;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px #00000029;
-  border: 1px solid #f5f5f5;
-  border-radius: 8px;
-  opacity: 1;
+    width: 65%;
+    padding: 44px 60px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #f5f5f5;
+    border-radius: 8px;
+    opacity: 1;
 }
+
 .form-head {
-  font: normal normal bold 25px/37px Roboto;
-  letter-spacing: 0px;
-  color: #42515f;
-  text-transform: capitalize;
-  opacity: 1;
-  padding-bottom: 20px;
+    text-align: left;
+    font: normal normal bold 28px/37px Roboto;
+    letter-spacing: 0px;
+    color: #42515F;
+    text-transform: capitalize;
+    opacity: 1;
+    padding-bottom: 20px;
 }
+
 .row-content {
-  display: flex;
-  flex-direction: row;
-  margin: auto;
-  margin-bottom:10px ;
-  align-items: center;
-  border: 0px solid rgb(227, 237, 227);
+     text-align: left;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    align-items: center;
+    border: 0px solid green;
 }
+
 .label {
-  min-width: 140px;
+    min-width: 140px;
 }
+
 label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
+    padding: 12px 12px 12px 0px;
+    display: inline-block;
 }
+
 .text {
-  font-size: 16px;
-  color: #42515f;
-  opacity: 1;
-  font-family: Roboto;
-
+    font-size: 16px;
+    color: #43515f;
+    opacity: 1;
+    font-family: Roboto;
 }
+
 .input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid green;
-  border-radius: 4px;
-  resize: vertical;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+error-output{
+    margin-left: 10px;
+    font-size: 12px;
+    font-style: italic;
+    color:red;
 }
 
-/*  FOR Profile image display in row using class name profile-radio-content */
 
-.profile-radio-content {
-  display: flex;
-  flex-direction: row;
-}
-.profile-radio-content >label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-profile {
-  width: 30px;
-  border: 40px;
-  margin-left: 12px;
-}
-.label{
-  font: normal normal bolder 10px/15px;
-  padding: 12px 12px 12px 0;
-  display: inline-block;
+/*Uc3*/
+.profile-radio-content{
+    display: flex;
+    flex-direction: row;
 }
 
+
+.profile-radio-content > label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile{
+    width: 40px;
+    border-radius: 50%;
+    margin-left: 12px;
+}
+
+/* UC 5  */
 select {
     padding: 12px;
     border: 1px solid rgb(52, 190, 217);
     border-radius: 4px;
-    margin-left: 70px;
+    margin-left: 60px;
     resize: vertical;
     font: normal normal normal 16px Roboto;
     letter-spacing: 0px;
     color: #090909;
     background-color: transparent;
 }
-.buttonParent {
-  display: flex;
-  margin-bottom: 40px;
-  justify-content: space-between;
-  margin-top: 20px;
+
+/* UC 6  */
+.buttonParent{
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-.button {
-  font-size: 20px;
-  font-family: Roboto;
-  letter-spacing: 0px;
-  color: #42515f;
-  opacity: 1;
-  background: transparent;
-  border: none;
-  font-weight: 400;
-  min-width: 140px;
-  padding: 7px 7px;
-  border: 1px solid #707070;
-  cursor: pointer;
+.button{
+    font-size: 20px;
+    font-family: Roboto;
+    letter-spacing: 0px;
+    color: #0d0d0e;
+    opacity: 1;
+    background: transparent;
+    border: none;
+    font-weight: 400;
+    min-width: 140px;
+    padding: 7px 7px;
+    border: 1px solid#539bee;
+    background-color: rgb(163, 208, 237);
+    cursor: pointer;
+    border-radius: 5px;
 }
+
 .submitButton {
-  border: none;
-  background-color: #f5f5f5;
-  margin-right: 30px;
-
+    border: 1px solid rgb(52, 190, 217);
+    margin-right: 30px;
 }
+
 .cancelButton {
-  /* margin-left :140px */
-  text-decoration: none;
-  text-align: center;
+    margin-left: 140px;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid rgb(52, 190, 217);
 }
-@media  only screen and (max-width:960px) {
-  .cancelButton{
-      margin-left: 0px;
-  }
-  .form {
-      width: 85%;
-      padding: 44px 20px;
-  }
+
+
+
+/* UC 6 - Extn : Adding Media Queries*/
+
+@media only screen and (max-width: 960px) {
+    .cancelButton {
+        margin-left: 0px;
+    }
+    .form {
+        width: 85%;
+        padding: 44px 20px;
 }
-@media only screen and (max-width:600px) {
-  .form{
-      margin-top: 10px;
-  }
-  .row {
-      flex-direction: column;
+}
 
-  }
-  .uploadButton {
-      justify-content: flex-start;
+@media only screen and (max-width: 600px) {
+    .form{
+        margin-top: 10px;
+ }
 
-  }
-  .submit-reset {
-      width: 100px;
-      display: flex;
-      flex-grow: 1;
-      flex-direction: row-reverse;
-      justify-content: space-between;
-      margin-bottom: 20px;
+.row {
+        flex-direction: column;
+ }
+.uploadButton {
+        justify-content: flex-start;
+}
 
-  }
+.profile-radio-content{
+        flex-flow: wrap;
+}
+
+.submit-reset{
+        width: 100%;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        margin-bottom: 20px;
+}
   .submitButton {
       margin: 0;
 
