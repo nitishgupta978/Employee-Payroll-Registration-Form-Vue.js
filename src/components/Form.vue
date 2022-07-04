@@ -32,22 +32,22 @@
         <div class="profile-radio-content">
             <label >
                 <input type="radio" name="profile" id="profile1" value="../assets/Ellipse -01.png" v-model="formValues.profilePic" required>
-                <img class="profile" id="image1" src="../assets/Ellipse -01.png" alt="image1" style="height: 50px" />
+                <img class="profile" id="image" src="../assets/Ellipse -01.png" alt="image" style="height: 50px" />
             </label>
 
             <label >
                 <input type="radio" name="profile" id="profile2" value="../assets/Ellipse -02.png" v-model="formValues.profilePic" required/>
-                <img class="profile" id="image2" src="../assets/Ellipse -02.png" alt="image2" style="height: 50px"/>
+                <img class="profile" id="image" src="../assets/Ellipse -02.png" alt="image" style="height: 50px"/>
             </label>
 
             <label >
                 <input type="radio" name="profile" id="profile3" value="../assets/Ellipse -03.png" v-model="formValues.profilePic" required>
-                <img class="profile" id="image3" src="../assets/Ellipse -03.png" alt="image3" style="height: 50px">
+                <img class="profile" id="image" src="../assets/Ellipse -03.png" alt="image" style="height: 50px">
             </label>
 
             <label >
                 <input type="radio" name="profile" id="profile4" value="../assets/Ellipse -04.png"  v-model="formValues.profilePic" required/>
-                <img class="profile" id="image4" src="../assets/Ellipse -04.png" alt="image4" style="height: 50px"/>
+                <img class="profile" id="image" src="../assets/Ellipse -04.png" alt="image" style="height: 50px"/>
             </label>
 
         </div>
@@ -177,7 +177,7 @@
 import EmployeeService from '../Service/EmployeeService';
 
 export default {
-  name: 'HelloWorld',
+  name: 'Form',
   
   data() {
     return{

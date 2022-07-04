@@ -18,26 +18,17 @@
           <td>{{employees.department}}</td>
           <td>{{employees.salary}}</td>
           <td>{{employees.startDate}}</td>
-           <td>{{employees.note}}</td>
-           <td>
-             <v-bottom-navigation
-      v-model="value"
-      :input-value="active"
-      color="indigo"
-       />
-      <v-btn>
-        <span>Recents</span>
-
-        <v-icon>mdi-history</v-icon>
-      </v-btn>
+          <td>{{employees.note}}</td>
+            
+           <td>            
             <img
-            @click="remove(employees.employeeId)"
-            src="../assets/filled-trash.png"
-            alt="delete"/>
+             @click="remove(employees.employeeId)"
+             src="../assets/delete.d.png"
+             alt="delete"/>
 
              <img
             @click="update(employees.employeeId)"
-            src="../assets/edit.png"
+            src="../assets/reddit.png"
             alt="edit"/>
 
            </td>
@@ -46,6 +37,7 @@
     </tbody>
   </table>
 </template>
+
 <script>
 
 import EmployeeService from '../Service/EmployeeService';
@@ -66,11 +58,31 @@ export default {
         this.employee = response.data.data;
       });
   },
+  remove(employeeId){
+    var answer = window.confirm(
+      "Data once delete cannot be restored ! Do  you wish to continue?");
+    if (answer === true) {
+      EmployeeService.deleteEmployee(employeeId).then((data) =>{
+        alert("Employee delete successfully!!");
+        window.location.reload();
+        this.getEmployees();
 
+      })
+      .catch((error) =>{
+        alert("Somthing Send Wrong !!");
+
+      });    
+    }else{
+      alert("Employee not delete!!");
+    }
+
+  }
   },
  created() {
    
     this.getEmployees();
   },
+
+  
 }
 </script> 

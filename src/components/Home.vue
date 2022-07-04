@@ -13,6 +13,7 @@
 
    <div class="main-content">
     <div class="header-content">
+        
         <div class="emp-detail-text">
             Employee Details 
         <div class="emp-count"></div>
@@ -20,7 +21,7 @@
             <div>
                 <router-link to="/HelloWorld"><button class="button">Add user</button></router-link>
             </div> 
-            <!-- <img src="../asserts/add-24px.svg" alt="">Add user</a> -->
+            
     </div>
     <div class="table-main">
             <DisplayHome/>
@@ -91,6 +92,7 @@ body {
 
 
 .main-content{
+    
     display: flex;
     flex-direction: column;
     min-height: calc(100vh-80px);
@@ -100,6 +102,7 @@ body {
 }
 
 .header-content{
+    text-align: left;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
