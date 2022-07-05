@@ -15,13 +15,11 @@
                 <span class="emp-text emp-payroll">payroll </span>
             </div>
         </div>
-
     </header>
-    
      <div class="form-content">
         <form class="form" action="#"  @submit=" submitForm">
             
-        <div class="form-head"> Employee payroll form  </div>
+        <div class="form-head"> Update Employee payroll form  </div>
         
         <div class="row-content">
            
@@ -78,7 +76,8 @@
             <input type="checkbox" value="Finance" id="Finance"  v-model="formValues.department">Finance
             <input type="checkbox" value="engineer" id="engineer"  v-model="formValues.department">Engineer
             <input type="checkbox" value="other" id="other"  v-model="formValues.department">Other
-             
+              <!-- <p style="color:rgb(188, 122, 122);">***Department can be select Multipule </p> -->
+           
 
         </div>
     </div>
@@ -163,22 +162,23 @@
        <router-link to="/"> <button  class="resetButton button cancelButton">Cancel</button></router-link>
 
         <div class="Submit-reset">
-            <button type="submit" class="button submitButton " id="submitButton"> Submit</button>
+            <button type="submit" class="button submitButton " id="submitButton">Update</button>
+
             <button type="reset" class=" resetButton button">Reset</button>
         </div>
     </div>
  </form>
-
-    </div>
-</body>
+ </div>
+ </body>
 </template>
 
 <script>
 
+
 import EmployeeService from '../Service/EmployeeService';
 
 export default {
-  name: 'HelloWorld',
+  name: 'EditForm',
   
   data() {
     return{
@@ -204,18 +204,44 @@ export default {
         console.log(this.formValues)
         const data=this.formValues;
 
-        EmployeeService.addEmployees(data).then ((response) => {
+        EmployeeService.updateEmployee(this.formValues.id,data).then ((response) => {
             console.log(response);
             console.log(response.data.data);
             this.employees=response.data.data;
-            alert(" Employee Added Successfully!!",response)
+            alert(" Employee updated Successfully!!",response)
         })
         .catch(error =>{
             console.log(error);
             alert("WARNING !! Error while adding the Employee!")
         })
     },
-  
+
+    getEmployeeById(id){
+        EmployeeService.getEmployeeById(id).then((response) =>{
+            let object = response.data.data;
+            this.setData(object);
+        });
+    },
+
+     setData(obj) {
+      console.log(obj);
+      let array = obj.startDate;
+      console.log(array);
+      this.formValues.id = obj.employeeId;
+      this.formValues.name = obj.name;
+      this.formValues.department = obj.department;
+      this.formValues.day = array[0] + array[1];
+      this.formValues.month = array[2] + array[3] + array[4];
+      this.formValues.year = array[5] + array[6] + array[7] + array[8];
+      this.formValues.note = obj.note;
+      this.formValues.gender = obj.gender;
+      this.formValues.salary = obj.salary;
+      this.formValues.profilePic = obj.profilePic;
+      console.log(this.formValues);
+    },
+  },
+  created() {
+    this.getEmployeeById(this.$route.params.id);
   },
   }
 

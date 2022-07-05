@@ -58,6 +58,9 @@ export default {
         this.employee = response.data.data;
       });
   },
+  update(id){
+    this.$router.push({name:"EditForm",params:{id: id }});
+  },
   remove(employeeId){
     var answer = window.confirm(
       "Data once delete cannot be restored ! Do  you wish to continue?");

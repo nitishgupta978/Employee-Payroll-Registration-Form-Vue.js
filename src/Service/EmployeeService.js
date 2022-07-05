@@ -1,6 +1,6 @@
 import axios from 'axios'
 
- const EMPLOYEE_BASED_API_URL=`http://localhost:8094/employeepayrollservice`;
+ const EMPLOYEE_BASED_API_URL=`http://localhost:8096/employeepayrollservice`;
 
 class EmployeeService{
     getAllEmployee(){
@@ -13,8 +13,11 @@ class EmployeeService{
     deleteEmployee(employee_id){
         return axios.delete(`${EMPLOYEE_BASED_API_URL}/delete/${employee_id}`);
     }
-//     updateEmployee(employee_id){
-//         return axios.put(`${EMPLOYEE_BASED_API_URL}/update/${employee_id}`);
-// }
+    getEmployeeById(employee_id){
+        return axios.get(`${EMPLOYEE_BASED_API_URL}/get/${employee_id}`);
+    }
+    updateEmployee(employee_id,data){
+        return axios.put(`${EMPLOYEE_BASED_API_URL}/update/${employee_id}`,data);
+}
 }
 export default new EmployeeService();

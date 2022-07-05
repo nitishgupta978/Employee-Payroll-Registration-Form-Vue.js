@@ -9,6 +9,7 @@ const routes= [
         name: 'home',
         component: Home
     },
+    
     {
         path: '/helloWorld',
         name: 'HelloWorld',
@@ -20,7 +21,7 @@ const routes= [
         component: DisplayHome
     },
     {
-        path: '/displayHome',
+        path: '/editemployee/:id?',
         name: 'EditForm',
         component: EditForm
     },
